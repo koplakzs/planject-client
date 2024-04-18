@@ -9,7 +9,7 @@ const fontSans = FontSans({
   variable: "--font-sans",
 });
 export const metadata: Metadata = {
-  title: "Planject",
+  title: "Plan Ject",
   description: "Assigment Your Task",
 };
 
@@ -22,12 +22,12 @@ export default function RootLayout({
     <html lang="en">
       <body
         className={cn(
-          "min-h-screen bg-gray-100 font-sans antialiased px-10",
+          "min-h-screen bg-gray-100 font-sans antialiased",
           fontSans.variable
         )}
       >
         <Navbar />
-        <main>{children}</main>
+        <main className="px-10">{children}</main>
       </body>
     </html>
   );
