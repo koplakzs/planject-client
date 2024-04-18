@@ -1,11 +1,18 @@
+import { postRegister } from "@/services/api";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
 export const useCreateRegister = () => {
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
-  }
+  const onSubmit = async (values: z.infer<typeof formSchema>) => {
+    try {
+      const response = await postRegister(values);
+
+      console.log(response);
+    } catch (error) {
+      console.log(error);
+    }
+  };
   const formSchema = z
     .object({
       username: z.string().min(1),
