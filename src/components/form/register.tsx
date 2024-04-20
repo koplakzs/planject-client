@@ -10,10 +10,10 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { RadioGroup, RadioGroupItem } from "../ui/radio-group";
-import { useCreateRegister } from "@/features/auth/useCreateRegister";
+import { usePostRegister } from "@/features/auth/usePostRegister";
 
 export function RegisterForm() {
-  const { form, onSubmit } = useCreateRegister();
+  const { form, onSubmit } = usePostRegister();
 
   return (
     <Form {...form}>

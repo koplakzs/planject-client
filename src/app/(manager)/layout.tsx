@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Inter as FontSans } from "next/font/google";
-import "./globals.css";
-import Navbar from "@/components/navigation/navbar";
+import "@/style/globals.css";
 import { cn } from "@/lib/utils";
 
 const fontSans = FontSans({
@@ -26,7 +25,6 @@ export default function RootLayout({
           fontSans.variable
         )}
       >
-        <Navbar />
         <main className="px-10">{children}</main>
       </body>
     </html>

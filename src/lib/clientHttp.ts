@@ -11,8 +11,26 @@ export const clientHttp = {
     const config: RequestInit = {
       method: "POST",
       body: JSON.stringify(body),
+
       headers: {
         "Content-Type": "application/json",
+      },
+    };
+    const response = await fetch(url, config);
+
+    const data = await response.json();
+
+    return data;
+  },
+  get: async (endpoint: string) => {
+    const url = new URL(`${process.env.NEXT_PUBLIC_API_URL}/${endpoint}`);
+
+    const config: RequestInit = {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization:
+          "Bearer 18|9B9MCPIIDuIozhnrBSbudjIcdAer68kX7NeuYf9X7dc2d593",
       },
     };
     const response = await fetch(url, config);

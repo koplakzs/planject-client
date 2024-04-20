@@ -1,6 +1,5 @@
 import Link from "next/link";
 import { FaArrowRight } from "react-icons/fa";
-import HomePicture from "../../public/assets/images/home-images-removebg.png";
 import Image from "next/image";
 export default function Page() {
   return (
@@ -28,7 +27,13 @@ export default function Page() {
           </Link>
         </div>
 
-        <Image src={HomePicture} alt="Home Image" className="w-6/12" />
+        <Image
+          src={"/assets/images/home-images-removebg.png"}
+          alt="Home Image"
+          className="w-6/12"
+          width={500}
+          height={500}
+        />
       </section>
     </main>
   );
