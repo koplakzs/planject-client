@@ -1,4 +1,5 @@
 import { postLogin } from "@/services/api";
+import { setUserId, setUserToken } from "@/utils/helper";
 import { loginSchema } from "@/utils/schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { error } from "console";
@@ -23,6 +24,11 @@ interface postLoginResponse {
 
 export const usePostLogin = () => {
   const router = useRouter(); // Initialize useRouter hook
+
+  const setAuthCookies = async (userToken: string, userId: string) => {
+    setUserId(userId);
+    setUserToken(userToken);
+  };
   const onSubmit = async (values: z.infer<typeof loginSchema>) => {
     try {
       const response: postLoginResponse = await postLogin({
@@ -30,12 +36,16 @@ export const usePostLogin = () => {
         password: values.password,
       });
 
-      // console.log(response);
-      if (response.statusCode !== 200) throw new Error("failed");
-      if (response.data.role === "pt") {
-        router.push("/dashboard"); // Redirect on the client-side
-      } else if (response.data.role === "pm") {
-        router.push("/manager"); // Redirect on the client-side
+      if (response.statusCode !== 200) {
+        throw new Error("failed");
+      } else if (response.statusCode === 200) {
+        console.log("success", response);
+        await setAuthCookies(response.data.token, response.data.userId);
+        if (response.data.role === "pt") {
+          router.push("/dashboard");
+        } else if (response.data.role === "pm") {
+          router.push("/manager");
+        }
       }
     } catch (error) {
       console.log(error);
