@@ -10,19 +10,18 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { usePostLogin } from "@/features/auth/usePostLogin";
-// import { onSubmit } from "@/features/auth/usePostLogin";
-import { loginSchema } from "@/utils/schema";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
+import useAuth from "@/features/auth/useAuth";
 
 export function LoginForm() {
-  const { form, onSubmit } = usePostLogin();
+  const { isLoading, formLogin, handleLogin } = useAuth();
   return (
-    <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+    <Form {...formLogin}>
+      <form
+        onSubmit={formLogin.handleSubmit(handleLogin)}
+        className="space-y-8"
+      >
         <FormField
-          control={form.control}
+          control={formLogin.control}
           name="email"
           render={({ field }) => (
             <FormItem>
@@ -35,7 +34,7 @@ export function LoginForm() {
           )}
         />
         <FormField
-          control={form.control}
+          control={formLogin.control}
           name="password"
           render={({ field }) => (
             <FormItem>
@@ -47,8 +46,8 @@ export function LoginForm() {
             </FormItem>
           )}
         />
-        <Button type="submit" className="w-full">
-          Submit
+        <Button type={isLoading ? "button" : "submit"} className="w-full">
+          {isLoading ? "Loading" : "Login"}
         </Button>
       </form>
     </Form>

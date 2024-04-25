@@ -1,5 +1,4 @@
 import { LoginForm } from "@/components/form/login";
-import { usePostLogin } from "@/features/auth/usePostLogin";
 import Link from "next/link";
 export default function Page() {
   return (

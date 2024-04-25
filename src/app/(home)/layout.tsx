@@ -9,7 +9,7 @@ const fontSans = FontSans({
   variable: "--font-sans",
 });
 export const metadata: Metadata = {
-  title: "Plan Ject",
+  title: "PlanJect",
   description: "Assigment Your Task",
 };
 

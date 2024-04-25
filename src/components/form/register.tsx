@@ -10,16 +10,19 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { RadioGroup, RadioGroupItem } from "../ui/radio-group";
-import { usePostRegister } from "@/features/auth/usePostRegister";
+import useAuth from "@/features/auth/useAuth";
 
 export function RegisterForm() {
-  const { form, onSubmit } = usePostRegister();
+  const { isLoading, formRegister, handleRegister } = useAuth();
 
   return (
-    <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-2">
+    <Form {...formRegister}>
+      <form
+        onSubmit={formRegister.handleSubmit(handleRegister)}
+        className="space-y-2"
+      >
         <FormField
-          control={form.control}
+          control={formRegister.control}
           name="username"
           render={({ field }) => (
             <FormItem>
@@ -31,7 +34,7 @@ export function RegisterForm() {
           )}
         />
         <FormField
-          control={form.control}
+          control={formRegister.control}
           name="email"
           render={({ field }) => (
             <FormItem>
@@ -43,7 +46,7 @@ export function RegisterForm() {
           )}
         />
         <FormField
-          control={form.control}
+          control={formRegister.control}
           name="role"
           render={({ field }) => (
             <FormItem>
@@ -72,7 +75,7 @@ export function RegisterForm() {
           )}
         />
         <FormField
-          control={form.control}
+          control={formRegister.control}
           name="password"
           render={({ field }) => (
             <FormItem>
@@ -85,7 +88,7 @@ export function RegisterForm() {
           )}
         />
         <FormField
-          control={form.control}
+          control={formRegister.control}
           name="confirm"
           render={({ field }) => (
             <FormItem>
@@ -101,8 +104,8 @@ export function RegisterForm() {
             </FormItem>
           )}
         />
-        <Button type="submit" className="w-full">
-          Submit
+        <Button type={isLoading ? "button" : "submit"} className="w-full">
+          {isLoading ? "Loading" : "Register"}
         </Button>
       </form>
     </Form>
