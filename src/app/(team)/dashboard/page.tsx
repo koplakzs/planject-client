@@ -33,14 +33,13 @@ export default async function Page() {
             </CardHeader>
             <CardContent className="text-4xl text-center">0</CardContent>
           </Card>
-
           <Card>
             <CardHeader>
               <CardTitle className="text-center text-lg font-semibold">
-                Task that have been completed
+                Task that have not been completed
               </CardTitle>
               <CardDescription className="text-center">
-                This is the total tasks that you have completed during the
+                This is the total tasks that you have not completed during the
                 project
               </CardDescription>
             </CardHeader>
@@ -49,10 +48,10 @@ export default async function Page() {
           <Card>
             <CardHeader>
               <CardTitle className="text-center text-lg font-semibold">
-                Task that have not been completed
+                Task that have been completed
               </CardTitle>
               <CardDescription className="text-center">
-                This is the total tasks that you have not completed during the
+                This is the total tasks that you have completed during the
                 project
               </CardDescription>
             </CardHeader>
