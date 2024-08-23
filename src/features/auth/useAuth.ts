@@ -14,22 +14,27 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { handler } from "tailwindcss-animate";
 
-interface userResponse {
-  token: string;
-  userId: string;
-  username: string;
-  role: string;
-}
+// interface userResponse {
+//   token: string;
+//   userId: string;
+//   username: string;
+//   role: string;
+// }
 
-interface postLoginResponse {
-  status: string;
-  statusCode: number;
-  data: userResponse;
-}
+// interface postLoginResponse {
+//   status: string;
+//   statusCode: number;
+//   data: userResponse;
+// }
 
 const useAuth = () => {
   const router = useRouter(); // Initialize useRouter hook
-  const [isLoading, setIsLoading] = useState(false);
+  const [state, setState] = useState({
+    isLoading: false,
+    isSuccesRegis: false,
+    isFailRegis: false,
+  });
+
   // const setAuthCookies = async (userToken: string, userId: string) => {
   //   setUserId(userId);
   //   setUserToken(userToken);
@@ -56,9 +61,9 @@ const useAuth = () => {
 
   // Login
   const handleLogin = async (values: z.infer<typeof loginSchema>) => {
-    setIsLoading(true);
+    setState((prevState) => ({ ...prevState, isLoading: true }));
     try {
-      const response: postLoginResponse = await postLogin({
+      const response = await postLogin({
         email: values.email,
         password: values.password,
       });
@@ -77,31 +82,41 @@ const useAuth = () => {
     } catch (error) {
       console.log(error);
     } finally {
-      setIsLoading(false);
+      setState((prevState) => ({ ...prevState, isLoading: false }));
     }
   };
 
   // Register
 
   const handleRegister = async (values: z.infer<typeof registerSchema>) => {
-    setIsLoading(true);
+    setState((prevState) => ({ ...prevState, isLoading: true }));
     try {
       const response = await postRegister(values);
-
-      console.log(response);
+      if (response.statusCode !== 200) {
+        setState((prevState) => ({ ...prevState, isFailRegis: true }));
+      } else {
+        setState((prevState) => ({ ...prevState, isSuccesRegis: true }));
+      }
     } catch (error) {
       console.log(error);
     } finally {
-      setIsLoading(false);
+      setState((prevState) => ({ ...prevState, isLoading: false }));
     }
   };
 
+  const closeSuccessRegis = () =>
+    setState((prevState) => ({ ...prevState, isSuccesRegis: false }));
+  const closeFailRegis = () =>
+    setState((prevState) => ({ ...prevState, isFailRegis: false }));
+
   return {
-    isLoading,
+    state,
     formLogin,
     formRegister,
     handleLogin,
     handleRegister,
+    closeSuccessRegis,
+    closeFailRegis,
   };
 };
 

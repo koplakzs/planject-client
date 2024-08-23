@@ -5,13 +5,19 @@ interface bodyProps {
   password?: string;
 }
 
+interface fecthResponse<T = any> {
+  data?: T;
+  message?: string;
+  statusCode?: number;
+  status?: string;
+}
+
 export const clientHttp = {
-  post: async (endpoint: string, body: bodyProps) => {
+  post: async (endpoint: string, body: bodyProps): Promise<fecthResponse> => {
     const url = new URL(`${process.env.NEXT_PUBLIC_API_URL}/${endpoint}`);
     const config: RequestInit = {
       method: "POST",
       body: JSON.stringify(body),
-
       headers: {
         "Content-Type": "application/json",
       },
@@ -22,7 +28,7 @@ export const clientHttp = {
 
     return data;
   },
-  get: async (endpoint: string) => {
+  get: async (endpoint: string): Promise<fecthResponse> => {
     const url = new URL(`${process.env.NEXT_PUBLIC_API_URL}/${endpoint}`);
 
     const config: RequestInit = {
